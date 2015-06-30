@@ -1,0 +1,9 @@
+#! /bin/sh
+mkdir -p ~/asava003/weather_classes
+javac -classpath /etc/hadoop/conf:/usr/lib/hadoop/lib/*:/usr/lib/hadoop/.//*:/usr/lib/hadoop-hdfs/./:/usr/lib/hadoop-hdfs/lib/*:/usr/lib/hadoop-hdfs/.//*:/usr/lib/hadoop-yarn/.//*:/usr/lib/hadoop-0.20-mapreduce/./:/usr/lib/hadoop-0.20-mapreduce/lib/*:/usr/lib/hadoop-0.20-mapreduce/.//* -d ~/asava003/weather_classes weather.java
+jar -cvf ~/asava003/weather.jar -C weather_classes/ .
+hadoop fs -rm -r $1/asava003
+hadoop fs -rm -r $3
+hadoop jar ~/asava003/weather.jar org.myorg.weather $1 $2 $1/asava003 $3
+hadoop fs -rm -r $1/asava003
+hadoop fs -cat $3/part-r-00000
